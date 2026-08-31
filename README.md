@@ -1,5 +1,7 @@
 # Prompt Quill (CLI)
 
+Credit to osi1880vr for the original idea. Great project, but the original author is no longer maintaining this project. I couldn't get it to work immediately, so I've forked it to have it do exactly what I need and to provide some form of maintenance... at least for those not afraid to get their hands dirty.
+
 A minimal command-line version of [Prompt Quill](https://github.com/osi1880vr/prompt_quill):
 type a short text-to-image prompt, get back a detailed enhanced one.
 
@@ -67,7 +69,7 @@ If Qdrant is unreachable or the collection does not exist, the tool prints a war
 stderr and continues without context — it never fails because of RAG. Use `--no-rag` to
 skip retrieval entirely (also avoids loading the embedding model).
 
-## Setting up Qdrant (optional but recommended)
+## Setting up Qdrant
 
 **Full step-by-step guide: [QDRANT_SETUP.md](QDRANT_SETUP.md)** — running a server,
 loading the prebuilt ~3.2M-prompt dataset or indexing your own prompt files with
