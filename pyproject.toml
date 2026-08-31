@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prompt-quill"
+version = "0.1.0"
+description = "CLI prompt enhancer for text-to-image prompts (core of the Prompt Quill app)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+dependencies = [
+    "openai>=1.40",
+    "qdrant-client>=1.8",
+    "sentence-transformers>=2.6",
+]
+
+[project.scripts]
+prompt-quill = "prompt_quill.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["prompt_quill*"]
+
+[tool.setuptools.package-data]
+prompt_quill = ["wildcards/*.txt"]
