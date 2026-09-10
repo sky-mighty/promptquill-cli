@@ -37,7 +37,7 @@ Useful flags:
 -n, --negative        also print the suggested negative prompt (and helpful models)
 --template {a,b}      magic-prompt template: a = storytelling (default), b = concept lists
 --temperature 0.7     sampling temperature
---max-tokens 512      max completion tokens
+--max-tokens 16384    max completion tokens (default; thinking models need headroom)
 --model NAME          LLM model name        (env PQ_MODEL, default qwen3.8-27b@q4_k_s:2)
 --base-url URL        OpenAI-compatible API base URL (env PQ_BASE_URL, default http://localhost:8082/v1)
 --api-key KEY         API key              (env PQ_API_KEY, default "not-needed")
