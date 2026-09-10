@@ -4,6 +4,7 @@
 # sentence-transformers, without the llama-index dependency.
 
 import json
+import re
 import sys
 
 DEFAULT_QDRANT_URL = "http://localhost:6333"
@@ -11,6 +12,27 @@ DEFAULT_COLLECTION = "test_collection_import"
 # Fixed embedding model — no override. Must match the model used when indexing;
 # the prebuilt dataset and scripts/index_prompts.py both use this one.
 EMBED_MODEL = "BAAI/bge-base-en-v1.5"
+
+
+def _split_negative_terms(neg):
+    """Split a stored negative prompt into clean terms.
+
+    Civitai negatives use weighted-prompt syntax — ``(worst quality, low
+    quality:1.2)`` or ``glossy:1.1`` — and LoRA references like
+    ``<lora:name:1.2>``. The parens are grouping markers, the ``:weight`` suffix
+    is a strength hint, and angle-bracketed segments name a model/LoRA; none of
+    that belongs in a term list, so strip all three before comma-splitting (a
+    naive split leaves fragments like ``(worst quality`` / ``bw)`` / ``<lora``).
+    """
+    neg = re.sub(r"<[^>]*>", " ", neg)  # drop <lora:...> and any dangling <...
+    neg = neg.replace("(", " ").replace(")", " ")
+    terms = []
+    for part in neg.split(","):
+        term = part.split(":", 1)[0].strip()
+        if not term or "<" in term or ">" in term:
+            continue  # a stray bracket can never be part of a valid term
+        terms.append(term)
+    return terms
 
 
 class RAGRetriever:
@@ -86,7 +108,7 @@ class RAGRetriever:
 
             neg = payload.get('negative_prompt')
             if neg is not None:
-                negative_prompts.extend(part.strip() for part in neg.split(',') if part.strip())
+                negative_prompts.extend(_split_negative_terms(neg))
             model_name = payload.get('model_name')
             if model_name:
                 models_list.append(str(model_name))
