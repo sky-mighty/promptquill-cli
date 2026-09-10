@@ -33,7 +33,7 @@ def build_parser():
     llm.add_argument("--api-key", default=os.environ.get("PQ_API_KEY", "not-needed"),
                      help="API key (default: not-needed, env PQ_API_KEY)")
     llm.add_argument("--temperature", type=float, default=0.7)
-    llm.add_argument("--max-tokens", type=int, default=512)
+    llm.add_argument("--max-tokens", type=int, default=16384)
     llm.add_argument("--template", choices=["a", "b"], default="a",
                      help="magic prompt template: a = storytelling (default), b = concept lists")
 

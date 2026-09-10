@@ -32,7 +32,7 @@ def build_messages(template_text, query_str):
     return system
 
 
-def enhance_prompt(client, model, template_name, query, context_str, temperature=0.7, max_tokens=512):
+def enhance_prompt(client, model, template_name, query, context_str, temperature=0.7, max_tokens=16384):
     from .prompts import PROMPT_TEMPLATES
 
     template_text = PROMPT_TEMPLATES[template_name]
